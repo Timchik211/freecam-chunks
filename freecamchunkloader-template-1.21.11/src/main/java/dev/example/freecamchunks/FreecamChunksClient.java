@@ -22,7 +22,7 @@ public class FreecamChunksClient implements ClientModInitializer {
             CamState.camPos = null;
             return;
         }
-        Vec3 p = cam.getPosition();
+        Vec3 p = cam.position();
         CamState.camPos = p.distanceToSqr(mc.player.position()) > 64.0 ? p : null;
     }
 }
