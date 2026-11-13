@@ -1,9 +1,8 @@
 package dev.example.freecamchunks;
 
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.phys.Vec3;
 
-/** Общее состояние: клиент пишет позицию камеры, интегрированный сервер читает. */
 public final class CamState {
-    public static volatile Vec3d camPos = null;
+    public static volatile Vec3 camPos = null;
     private CamState() {}
 }
