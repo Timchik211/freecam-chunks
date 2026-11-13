@@ -1,30 +1,29 @@
 package dev.example.freecamchunks.mixin;
 
 import dev.example.freecamchunks.CamState;
-import net.minecraft.entity.Entity;
-import net.minecraft.server.network.ServerChunkLoadingManager;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkSectionPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
+import net.minecraft.server.level.ChunkMap;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.entity.EntityAccess;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(ServerChunkLoadingManager.class)
+@Mixin(ChunkMap.class)
 public class ChunkLoadingManagerMixin {
 
-    /** Сервер думает, что "центр загрузки чанков" игрока — это камера. */
     @Redirect(
-        method = "updatePosition",
+        method = "move",
         at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/util/math/ChunkSectionPos;from(Lnet/minecraft/entity/Entity;)Lnet/minecraft/util/math/ChunkSectionPos;")
+            target = "Lnet/minecraft/core/SectionPos;of(Lnet/minecraft/world/level/entity/EntityAccess;)Lnet/minecraft/core/SectionPos;")
     )
-    private ChunkSectionPos freecamchunks$useCameraPos(Entity entity) {
-        Vec3d cam = CamState.camPos;
-        if (cam != null && entity instanceof ServerPlayerEntity) {
-            return ChunkSectionPos.from(BlockPos.ofFloored(cam));
+    private SectionPos freecamchunks$useCameraPos(EntityAccess entity) {
+        Vec3 cam = CamState.camPos;
+        if (cam != null && entity instanceof ServerPlayer) {
+            return SectionPos.of(BlockPos.containing(cam));
         }
-        return ChunkSectionPos.from(entity);
+        return SectionPos.of(entity);
     }
 }
