@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "freecamchunks",
+  "version": "1.0.0",
+  "name": "Freecam Chunks",
+  "description": "Загружает чанки вокруг камеры FreeCam в одиночной игре.",
+  "environment": "client",
+  "entrypoints": { "client": ["dev.example.freecamchunks.FreecamChunksClient"] },
+  "mixins": ["freecamchunks.mixins.json"],
+  "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.11", "java": ">=21", "fabric-api": "*" }
+}

@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.example.freecamchunks.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["ChunkLoadingManagerMixin"],
+  "injectors": { "defaultRequire": 1 }
+}
